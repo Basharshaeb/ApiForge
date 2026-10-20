@@ -31,8 +31,14 @@ an example.
 | Linux (any distribution) | `ApiForge-0.1.0.AppImage` | Single executable file |
 | Linux (Debian, Ubuntu, Mint) | `apiforge_0.1.0_amd64.deb` | Package for `apt` / `dpkg` |
 
-Nothing else is needed: no Node.js, no terminal, no build step. The packages
-are not code-signed, so the operating system may warn you on first launch:
+Nothing else is needed: no Node.js, no terminal, no build step. Packages
+for the newest, not yet released code are also built for every push and can
+be downloaded from the **Artifacts** section of the latest run on the
+[Actions tab](https://github.com/Basharshaeb/ApiForge/actions) (GitHub
+sign-in required).
+
+The packages are not code-signed, so the operating system may warn you on
+first launch:
 
 - **Windows:** if SmartScreen shows "Windows protected your PC", click
   **More info**, then **Run anyway**.
@@ -242,9 +248,12 @@ built on any OS, macOS packages only on macOS. The `build` section of
 `package.json` holds the configuration: the archive ships only the compiled
 `dist/src` tree (without source maps), the two icon files the app loads at
 runtime and the production `node_modules`; sources, tests, scripts and
-screenshots stay out. Pushing a tag such as `v0.2.0` runs
-`.github/workflows/release.yml`, which builds on Windows, macOS and Linux
-runners and attaches every package to a GitHub Release for that tag.
+screenshots stay out. `.github/workflows/release.yml` runs the gates and
+builds the packages on Windows, macOS and Linux runners for every push to
+`main` (download them from the run's **Artifacts** section on the Actions
+tab, kept for 30 days) and for every tag such as `v0.2.0`, where it also
+attaches them to a GitHub Release for that tag. It can be started by hand
+from the Actions tab as well.
 
 Project layout:
 
