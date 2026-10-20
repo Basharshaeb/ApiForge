@@ -1,0 +1,22 @@
+{
+  // Emits CommonJS for everything that runs under Node / Electron main / the
+  // worker thread, plus the model + tests. The renderer UI is bundled by
+  // esbuild (scripts/build.ts) and only type-checked here.
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "noEmit": false,
+    "outDir": "dist",
+    "rootDir": ".",
+    "sourceMap": true,
+    "lib": ["ES2022", "DOM"]
+  },
+  "include": [
+    "src/shared/**/*.ts",
+    "src/main/**/*.ts",
+    "src/runtime/**/*.ts",
+    "src/renderer/model/**/*.ts",
+    "src/renderer/codegen.ts",
+    "test/**/*.ts",
+    "scripts/**/*.ts"
+  ]
+}

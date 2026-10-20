@@ -2,13 +2,16 @@
   "name": "apiforge",
   "version": "0.1.0",
   "description": "ApiForge: Postman-style API client (Electron shell + postman-runtime worker)",
-  "main": "src/main/main.js",
+  "main": "dist/src/main/main.js",
   "private": true,
   "scripts": {
-    "start": "electron .",
-    "test": "node --test --test-timeout=30000 test/*.test.js",
-    "smoke": "node test/smoke.js",
-    "icon": "electron scripts/build-icon.js"
+    "build": "tsc -p tsconfig.build.json && node dist/scripts/build.js",
+    "check": "tsc --noEmit -p tsconfig.json",
+    "start": "npm run build && electron .",
+    "test": "npm run build && node --test --test-timeout=30000 dist/test/*.test.js",
+    "smoke": "npm run build && node dist/test/smoke.js",
+    "lint": "eslint .",
+    "icon": "npm run build && electron dist/scripts/build-icon.js"
   },
   "license": "MIT",
   "dependencies": {
@@ -19,7 +22,16 @@
     "ws": "^8.22.0"
   },
   "devDependencies": {
-    "electron": "^44.9.1"
+    "@eslint/js": "^9.39.5",
+    "@types/js-yaml": "^4.0.9",
+    "@types/node": "^22.20.5",
+    "@types/postman-collection": "^3.5.11",
+    "@types/ws": "^8.18.2",
+    "electron": "^44.9.1",
+    "esbuild": "^0.25.12",
+    "eslint": "^9.39.5",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.72.0"
   },
   "productName": "ApiForge",
   "author": {
