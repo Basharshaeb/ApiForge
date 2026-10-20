@@ -11,7 +11,11 @@
     "test": "npm run build && node --test --test-timeout=30000 dist/test/*.test.js",
     "smoke": "npm run build && node dist/test/smoke.js",
     "lint": "eslint .",
-    "icon": "npm run build && electron dist/scripts/build-icon.js"
+    "icon": "npm run build && electron dist/scripts/build-icon.js",
+    "dist": "npm run build && electron-builder",
+    "dist:win": "npm run build && electron-builder --win",
+    "dist:mac": "npm run build && electron-builder --mac",
+    "dist:linux": "npm run build && electron-builder --linux"
   },
   "license": "MIT",
   "dependencies": {
@@ -28,6 +32,7 @@
     "@types/postman-collection": "^3.5.11",
     "@types/ws": "^8.18.2",
     "electron": "^44.9.1",
+    "electron-builder": "^26.15.3",
     "esbuild": "^0.25.12",
     "eslint": "^9.39.5",
     "typescript": "^5.9.3",
@@ -46,14 +51,61 @@
   "build": {
     "appId": "com.basharshaeb.apiforge",
     "productName": "ApiForge",
+    "copyright": "Copyright © 2026 Basharshaeb",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "dist/src/**",
+      "!dist/src/**/*.map",
+      "!dist/src/renderer/model/**",
+      "!dist/src/renderer/codegen.js",
+      "assets/icon.png",
+      "assets/icon-64.png",
+      "package.json"
+    ],
     "win": {
-      "icon": "assets/icon.ico"
+      "icon": "assets/icon.ico",
+      "target": [
+        "nsis",
+        "portable"
+      ]
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "artifactName": "${productName}-Setup-${version}.${ext}",
+      "shortcutName": "ApiForge"
+    },
+    "portable": {
+      "artifactName": "${productName}-${version}-portable.${ext}"
     },
     "mac": {
-      "icon": "assets/icon.icns"
+      "icon": "assets/icon.icns",
+      "category": "public.app-category.developer-tools",
+      "target": [
+        {
+          "target": "dmg",
+          "arch": [
+            "x64",
+            "arm64"
+          ]
+        }
+      ],
+      "artifactName": "${productName}-${version}-${arch}.${ext}"
     },
     "linux": {
-      "icon": "assets/icon-512.png"
+      "icon": "assets/icon.png",
+      "category": "Development",
+      "maintainer": "Basharshaeb",
+      "target": [
+        "AppImage",
+        "deb"
+      ]
+    },
+    "appImage": {
+      "artifactName": "${productName}-${version}.${ext}"
     }
   }
 }

@@ -17,7 +17,7 @@ const quality = {
 };
 
 module.exports = tseslint.config(
-  { ignores: ['node_modules/**', 'dist/**', 'assets/**'] },
+  { ignores: ['node_modules/**', 'dist/**', 'release/**', 'assets/**'] },
   js.configs.recommended,
   ...tseslint.configs.recommended,
   { files: ['**/*.ts'], rules: quality },

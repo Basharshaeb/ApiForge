@@ -10,7 +10,51 @@ test scripts, organise requests into collections, switch environments, run
 whole collections, manage cookies and talk to WebSocket servers. Everything is
 stored on your own machine in one JSON file. No account, no cloud.
 
-## Requirements
+## Download
+
+### Download the installer (recommended)
+
+Ready-made packages are published on the GitHub Releases page:
+
+<https://github.com/Basharshaeb/ApiForge/releases>
+
+Open the latest release and download the file for your system. The version
+number in the file name changes with every release; `0.1.0` is used below as
+an example.
+
+| Platform | File | What you get |
+|---|---|---|
+| Windows installer | `ApiForge-Setup-0.1.0.exe` | Installs for the current user, adds Start menu and desktop shortcuts, includes an uninstaller |
+| Windows portable | `ApiForge-0.1.0-portable.exe` | One file, nothing to install; keep it anywhere and double-click it |
+| macOS (Apple silicon) | `ApiForge-0.1.0-arm64.dmg` | Disk image; drag ApiForge into Applications |
+| macOS (Intel) | `ApiForge-0.1.0-x64.dmg` | Disk image; drag ApiForge into Applications |
+| Linux (any distribution) | `ApiForge-0.1.0.AppImage` | Single executable file |
+| Linux (Debian, Ubuntu, Mint) | `apiforge_0.1.0_amd64.deb` | Package for `apt` / `dpkg` |
+
+Nothing else is needed: no Node.js, no terminal, no build step. Packages
+for the newest, not yet released code are also built for every push and can
+be downloaded from the **Artifacts** section of the latest run on the
+[Actions tab](https://github.com/Basharshaeb/ApiForge/actions) (GitHub
+sign-in required).
+
+The packages are not code-signed, so the operating system may warn you on
+first launch:
+
+- **Windows:** if SmartScreen shows "Windows protected your PC", click
+  **More info**, then **Run anyway**.
+- **macOS:** if Gatekeeper refuses to open the app, go to **System Settings
+  > Privacy & Security** and click **Open Anyway**, or run
+  `xattr -d com.apple.quarantine /Applications/ApiForge.app` once.
+- **Linux AppImage:** mark the file executable first
+  (`chmod +x ApiForge-0.1.0.AppImage`) or tick "Allow executing file as
+  program" in the file manager.
+
+Then continue with [Install](#install).
+
+### Run from source (alternative)
+
+Use this if there is no package for your platform, or if you want to change
+the code. It needs:
 
 - **Node.js 20 or newer** (Node 22 LTS recommended). Download it from
   <https://nodejs.org> and install with the default options. `npm` comes with
@@ -30,9 +74,7 @@ node --version
 npm --version
 ```
 
-## Download
-
-Pick one of the two options.
+Then get the code in one of two ways.
 
 **Option A: download the ZIP (no Git needed)**
 
@@ -49,9 +91,22 @@ git clone https://github.com/Basharshaeb/ApiForge.git
 
 ## Install
 
-Open a terminal inside the downloaded folder and install the dependencies.
-This downloads Electron and the Postman runtime (takes a minute or two the
-first time).
+**Installer download:**
+
+- **Windows installer:** run `ApiForge-Setup-0.1.0.exe` and follow the
+  wizard. You can change the install folder on the way.
+- **Windows portable:** no installation; move the `.exe` wherever you want
+  it and run it.
+- **macOS:** open the `.dmg`, drag **ApiForge** into **Applications**, then
+  eject the disk image.
+- **Linux AppImage:** no installation; make it executable (see above) and run
+  it.
+- **Linux .deb:** `sudo apt install ./apiforge_0.1.0_amd64.deb` (or open it
+  with your software center).
+
+**Source download:** open a terminal inside the downloaded folder and install
+the dependencies. This downloads Electron and the Postman runtime (takes a
+minute or two the first time).
 
 ```bash
 cd ApiForge
@@ -62,6 +117,12 @@ npm install
 ```
 
 ## Run
+
+**Installed app:** start **ApiForge** from the Start menu (Windows), the
+Applications folder or Launchpad (macOS) or your application menu (Linux
+.deb). For the portable `.exe` or the AppImage, double-click the file.
+
+**From source:**
 
 ```bash
 npm start
@@ -80,13 +141,17 @@ app.
   network connections. Allow it so the WebSocket and local test features work.
 - **Linux:** make sure the usual Electron runtime libraries are present
   (`libgtk-3`, `libnss3`, `libasound2`). Most desktop distributions already
-  have them.
+  have them. The `.deb` package pulls them in automatically.
 
 ## Update
 
+**Installer users:** download the new version from the Releases page and
+install it the same way. The Windows installer and the `.deb` replace the old
+version in place; for the portable `.exe`, the AppImage and the macOS app,
+replace the old file. Your data is not inside the app, so nothing is lost.
+
 **ZIP users:** download a new ZIP, extract it over the old folder (or into a
-new one) and run `npm install` again. Your data is not inside the app folder,
-so nothing is lost.
+new one) and run `npm install` again.
 
 **Git users:**
 
@@ -116,8 +181,15 @@ up by copying that one file.
 
 ## Uninstall
 
-Delete the ApiForge folder. If you also want to remove your saved data, delete
-the data file listed above.
+- **Windows installer:** Settings > Apps > ApiForge > Uninstall (or the
+  uninstaller in the install folder).
+- **Windows portable, AppImage:** delete the file.
+- **macOS:** drag ApiForge out of Applications into the Trash.
+- **Linux .deb:** `sudo apt remove apiforge`.
+- **Source:** delete the ApiForge folder.
+
+If you also want to remove your saved data, delete the data file listed
+above.
 
 ## Features
 
@@ -164,7 +236,24 @@ npm test         # unit + integration tests (runtime engine, model, importers, c
 npm run smoke    # boots the real app against a local server, drives the UI, saves a screenshot
 npm run lint     # ESLint + typescript-eslint with complexity / size limits
 npm run icon     # re-render assets/icon.svg into PNG / ICO / ICNS
+npm run dist     # build + package installers for this platform into release/
 ```
+
+### Build installers
+
+`npm run dist` runs the build and then [electron-builder](https://www.electron.build),
+which writes the packages into `release/`. `npm run dist:win`, `dist:mac` and
+`dist:linux` pick a platform explicitly; Windows and Linux packages can be
+built on any OS, macOS packages only on macOS. The `build` section of
+`package.json` holds the configuration: the archive ships only the compiled
+`dist/src` tree (without source maps), the two icon files the app loads at
+runtime and the production `node_modules`; sources, tests, scripts and
+screenshots stay out. `.github/workflows/release.yml` runs the gates and
+builds the packages on Windows, macOS and Linux runners for every push to
+`main` (download them from the run's **Artifacts** section on the Actions
+tab, kept for 30 days) and for every tag such as `v0.2.0`, where it also
+attaches them to a GitHub Release for that tag. It can be started by hand
+from the Actions tab as well.
 
 Project layout:
 
