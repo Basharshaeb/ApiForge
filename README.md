@@ -102,3 +102,4 @@ integration and a strict CSP; it only talks to the main process through the
 small `window.apiforge` bridge, and every IPC handler verifies the sender frame
 is the bundled UI. Response previews and visualizer output render inside an
 opaque-origin sandboxed iframe (`frame.html`).
+# ApiForge
