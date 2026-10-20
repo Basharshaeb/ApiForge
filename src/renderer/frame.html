@@ -1,0 +1,21 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <!--
+    Sandboxed host for response previews and visualizer templates. It is loaded
+    into an <iframe sandbox> so it runs in an opaque origin with no access to
+    the ApiForge bridge; the parent posts the HTML to render exactly once.
+  -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline' 'unsafe-eval' https: http: data: blob:; style-src 'unsafe-inline' https: http: data: blob:; img-src * data: blob:; font-src * data:; media-src * data: blob:; connect-src https: http:; frame-src https: http: data: blob:;">
+  <script>
+    window.addEventListener('message', function (event) {
+      if (!event.data || typeof event.data.html !== 'string') return;
+      document.open();
+      document.write(event.data.html);
+      document.close();
+    }, { once: true });
+  </script>
+</head>
+<body></body>
+</html>

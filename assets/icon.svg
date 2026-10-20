@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ff8f52"/>
+      <stop offset="0.55" stop-color="#ff6c37"/>
+      <stop offset="1" stop-color="#c2410c"/>
+    </linearGradient>
+    <linearGradient id="steel" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="1" stop-color="#e8e8e8"/>
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%">
+      <feDropShadow dx="0" dy="18" stdDeviation="18" flood-color="#000" flood-opacity="0.28"/>
+    </filter>
+  </defs>
+  <rect width="1024" height="1024" rx="224" fill="url(#bg)"/>
+  <rect x="24" y="24" width="976" height="976" rx="206" fill="none" stroke="#ffffff" stroke-opacity="0.16" stroke-width="12"/>
+  <!-- anvil -->
+  <path filter="url(#shadow)" fill="url(#steel)"
+        d="M150 440 L300 376 L872 376 Q900 376 900 404 L900 480 Q900 500 880 500 L720 500 L720 560 L664 560 L664 696 L860 740 Q888 748 888 776 L888 812 Q888 840 860 840 L236 840 Q208 840 208 812 L208 776 Q208 748 236 740 L428 696 L428 560 L372 560 L372 500 L300 500 L164 464 Q140 456 150 440 Z"/>
+  <!-- curly braces on the face -->
+  <path fill="#c2410c" fill-opacity="0.9" stroke="#c2410c" stroke-width="14" stroke-linecap="round" stroke-linejoin="round" fill-rule="evenodd"
+        d="M598 404 Q562 404 562 438 L562 456 Q562 470 548 470 Q562 470 562 484 L562 502 Q562 536 598 536 L598 516 Q582 516 582 502 L582 486 Q582 472 570 470 Q582 468 582 454 L582 438 Q582 424 598 424 Z M770 404 Q806 404 806 438 L806 456 Q806 470 820 470 Q806 470 806 484 L806 502 Q806 536 770 536 L770 516 Q786 516 786 502 L786 486 Q786 472 798 470 Q786 468 786 454 L786 438 Q786 424 770 424 Z"/>
+  <!-- spark -->
+  <path fill="#ffe47e" d="M784 150 L812 236 L898 264 L812 292 L784 378 L756 292 L670 264 L756 236 Z"/>
+  <circle cx="650" cy="190" r="16" fill="#ffe47e" fill-opacity="0.9"/>
+  <circle cx="910" cy="360" r="12" fill="#ffe47e" fill-opacity="0.8"/>
+</svg>
